@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define tcase                     lli t;cin>>t;while(t--)
+#define endl                      '\n'
+
+#define fast_io  ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+
+#define lli long long int
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            LOGIC FUNCTION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void solve() {
+    tcase{
+        lli N;
+        cin>>N;
+        lli A[N]={0};
+        lli B[N]={0};
+        for(lli i=0;i<N;i++){
+            cin>>A[i];
+        }
+        for(lli i=0;i<N;i++){
+            cin>>B[i];
+        }
+        lli ANS = 0;
+        for(lli i=0;i<N;i++){
+            ANS = max(ANS,20*A[i]-10*B[i]);
+        }
+        cout<<ANS<<endl;
+    }
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        END OF LOGIC FUNCTION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+int main() {
+    fast_io;
+    //bool testing = true;
+    bool testing = false;
+    if(testing) {
+        freopen("test.txt","rt",stdin);
+        cout<<".......Debug From test.txt File......."<<endl;
+		auto start = chrono::high_resolution_clock::now();
+
+		solve();
+
+		auto end = chrono::high_resolution_clock::now();
+        double time_taken = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+        time_taken *= 1e-9;
+        cout << "Time taken by program is : " << fixed << time_taken << setprecision(9);
+         cout << " sec" << endl;
+    }
+    else {
+        solve();
+    }
+    return 0;
+}

@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define tcase                     lli t;cin>>t;while(t--)
+#define endl                      '\n'
+
+#define fast_io  ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+
+#define lli long long int
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            LOGIC FUNCTION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void solve() {
+    tcase{
+        lli N;
+        cin>>N;
+        lli A[N+1]={0};
+        for(lli i=1;i<=N;i++){
+            cin>>A[i];
+        }
+        lli ARR[N+1]={0};
+        for(lli i=1;i<=N;i++){
+            ARR[i] = ARR[i-1]^A[i];
+        }
+        map<lli , vector<lli>> D;
+        D[0].push_back(0);
+        for(lli i=1;i<=N;i++){
+            D[ARR[i]].push_back(i);
+        }
+        lli sum = 0;
+        for(auto i=D.begin();i!=D.end();i++){
+            vector<lli> temp=i->second;
+            lli size_of_D = temp.size();
+            if(size_of_D>1){
+                for(lli j=0;j<size_of_D;j++){
+                    for(lli k=j+1;k<size_of_D;k++){
+                        sum += temp[k]-temp[j]-1;
+                    }
+                }
+            }
+        }
+        cout<<sum<<endl;
+    }
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        END OF LOGIC FUNCTION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+int main() {
+    //fast_io;
+    //bool testing = true;
+    bool testing = false;
+    if(testing) {
+        freopen("test.txt","rt",stdin);
+        cout<<".......Debug From test.txt File......."<<endl;
+		auto start = chrono::high_resolution_clock::now();
+
+		solve();
+
+		auto end = chrono::high_resolution_clock::now();
+        double time_taken = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+        time_taken *= 1e-9;
+        cout << "Time taken by program is : " << fixed << time_taken << setprecision(9);
+         cout << " sec" << endl;
+    }
+    else {
+        solve();
+    }
+    return 0;
+}

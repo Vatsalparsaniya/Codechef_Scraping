@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define tcase                     lli t;cin>>t;while(t--)
+#define endl                      '\n'
+
+#define fast_io  ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+
+#define lli long long int
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            LOGIC FUNCTION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void solve() {
+    tcase{
+        string card_line;
+        cin>>card_line;
+        lli card_line_length = card_line.length();
+        set<int> position_1;
+        for(lli i=0;i<card_line_length;i++){
+            if(card_line[i]=='1'){
+                position_1.insert(i);
+            }
+        }
+        lli Ans=0;
+        while(position_1.size()){
+            lli selected_position_1 = *position_1.begin();
+            card_line[selected_position_1] = 'X';
+            Ans++;
+            position_1.erase(selected_position_1);
+            if(card_line[selected_position_1-1]=='0'){
+                card_line[selected_position_1-1] = '1';
+                position_1.insert(selected_position_1-1);
+            }else if(card_line[selected_position_1-1]=='1'){
+                card_line[selected_position_1-1]='0';
+                position_1.erase(selected_position_1-1);
+            }
+            if(card_line[selected_position_1+1]=='1'){
+                card_line[selected_position_1+1]='0';
+                position_1.erase(selected_position_1+1);
+            }else if(card_line[selected_position_1+1]=='0'){
+                card_line[selected_position_1+1]='1';
+                position_1.insert(selected_position_1+1);
+            }
+        }
+        if(Ans==card_line_length){
+            cout<<"WIN"<<endl;
+        }else{
+            cout<<"LOSE"<<endl;
+        }
+    }
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        END OF LOGIC FUNCTION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+int main() {
+    fast_io;
+    //bool testing = true;
+    bool testing = false;
+    if(testing) {
+        freopen("test.txt","rt",stdin);
+        cout<<".......Debug From test.txt File......."<<endl;
+		auto start = chrono::high_resolution_clock::now();
+
+		solve();
+
+		auto end = chrono::high_resolution_clock::now();
+        double time_taken = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+        time_taken *= 1e-9;
+        cout << "Time taken by program is : " << fixed << time_taken << setprecision(9);
+         cout << " sec" << endl;
+    }
+    else {
+        solve();
+    }
+    return 0;
+}
