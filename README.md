@@ -1,7 +1,11 @@
 # Codechef_Scraping
 Python Script to get All Problem Statements and Solutions of any user for Any CodeChef Competition 
 
-After run Script you will get two separate folder 1 for Problem Statements and 2 for Solutions
+After run Script you will get two separate folder 
+
+         1 for Problem Statements (Name : "Problem_Statement")
+   
+         2 for Solutions (Name : "Solutions")
 
 ## DEMO
    RUN : python CodeChef_Scraping.py -c [CONTEST NAME] -u [USER NAME]
