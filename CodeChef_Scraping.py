@@ -49,65 +49,85 @@ for i in range(len(data)):
 
 time.sleep(5)
 print("\n\n\nScraping Problem Statement...\n\n")
+print("Select: ")
+print("\t\t1) Problem_Statement + Solution")
+print("\t\t2) Problem_Statement")
+print("\t\t3) Solution")
 
-for url_code in Problem_code_URL:
-    time.sleep(2)
-    print(url_code + " Working...")
-    problem_page_url = Contest_URL + 'problems/' + url_code+'/'
-    page = requests.get(problem_page_url)
-    page_contest = BeautifulSoup(page.content,'html.parser')
-#   print(page_contest)
-    statement = page_contest.findAll('div',attrs={'class':'content'})
-    a = statement[1].text
-    b = re.sub('[$]', '', a)
-    b = b.replace("\le","<").replace("\ldots","...").replace("\in","∈").replace("\oplus","⊕").replace("\{","{")
-    b =b.replace("\}","}").replace("\sum_{i=1}^{N-1}","i=1∑N−1").replace("**","").replace("`","").replace("\neq","≠")
-    b =b.replace("*","").replace("\rightarrow","->").replace("\ge",">").replace(" \cdot ","*").replace("\neq","≠")
-#   print(type(b))
-    file_name = filename = "Problem_Statement/{}/".format(url_code)+"{}.txt".format(url_code)
-    if not os.path.exists(os.path.dirname(file_name)):
-            try:
-                os.makedirs(os.path.dirname(file_name))
-            except OSError as exc: # Guard against race condition
-                if exc.errno != errno.EEXIST:
-                    raise
-    f= open(file_name,"w+",encoding='utf-8')
-    f.write(str(b))
-    f.close()
-    print("{} Problem_Statement Done...\n".format(url_code))
+choice = int(input("Select (1/2/3) :"))
 
-print("\n\nScraping Solutions...\n\n")
-
-for url_code in Problem_code_URL:
-    time.sleep(2)
-    print("\n"+url_code +"  working...")
-    Sloution_Status_url = Contest_URL + "status/" +url_code+","+User_name
-    page_content = requests.get(Sloution_Status_url)
-    page = BeautifulSoup(page_content.content,'html.parser')
-#         print(page)
-#         print(page.findAll('span',attrs={'class':'rating'})[0].text)
-#         print(page.findAll('span',attrs={'title':''})[4])
-    ID = page.findAll('td',attrs={'width':'60'})
-    j=1
-    for sub_id in ID:
-        solution_view_url = "https://www.codechef.com/viewplaintext/" + sub_id.text
-#         print(solution_view_url)
-#         solution_view_page = requests.get(solution_view_url)
-#         view_page = BeautifulSoup(solution_view_page.content,'html.parser')
-#         print(view_page)
-        req = Request(solution_view_url, headers={'User-Agent': 'Mozilla/5.0'})
-        webpage = urlopen(req).read()
-        webpage = BeautifulSoup(webpage,'html.parser')
-        z = webpage.find('pre').text
-        filename = "Solutions/{}/".format(url_code)+"{}_{}.txt".format(url_code,j)
-        j=j+1
-        if not os.path.exists(os.path.dirname(filename)):
-            try:
-                os.makedirs(os.path.dirname(filename))
-            except OSError as exc: # Guard against race condition
-                if exc.errno != errno.EEXIST:
-                    raise
-        f= open(filename,"w+",encoding='utf-8')
-        f.write(z)
+def Problem_S(Contest_name,User_name,Problem_code_URL):
+    print("\n\nProblem Statement Scraping...")
+    for url_code in Problem_code_URL:
+        time.sleep(2)
+        print(url_code + " Working...")
+        problem_page_url = Contest_URL + 'problems/' + url_code+'/'
+        page = requests.get(problem_page_url)
+        page_contest = BeautifulSoup(page.content,'html.parser')
+    #   print(page_contest)
+        statement = page_contest.findAll('div',attrs={'class':'content'})
+        a = statement[1].text
+        b = re.sub('[$]', '', a)
+        b = b.replace("\le","<").replace("\ldots","...").replace("\in","∈").replace("\oplus","⊕").replace("\{","{")
+        b =b.replace("\}","}").replace("\sum_{i=1}^{N-1}","i=1∑N−1").replace("**","").replace("`","").replace("\neq","≠")
+        b =b.replace("*","").replace("\rightarrow","->").replace("\ge",">").replace(" \cdot ","*").replace("\neq","≠")
+    #   print(type(b))
+        file_name = filename = "Problem_Statement/{}/".format(url_code)+"{}.txt".format(url_code)
+        if not os.path.exists(os.path.dirname(file_name)):
+                try:
+                    os.makedirs(os.path.dirname(file_name))
+                except OSError as exc: # Guard against race condition
+                    if exc.errno != errno.EEXIST:
+                        raise
+        f= open(file_name,"w+",encoding='utf-8')
+        f.write(str(b))
         f.close()
-        print("{}) {} Solution Done...".format(j-1,url_code))
+        print("{} Problem_Statement Done...\n".format(url_code))
+
+# print("\n\nScraping Solutions...\n\n")
+
+def Solution_s(Contest_name,User_name,Problem_code_URL):
+    print("\n\nSolutions Scraping...")
+    for url_code in Problem_code_URL:
+        time.sleep(2)
+        print("\n"+url_code +"  working...")
+        Sloution_Status_url = Contest_URL + "status/" +url_code+","+User_name
+        page_content = requests.get(Sloution_Status_url)
+        page = BeautifulSoup(page_content.content,'html.parser')
+    #         print(page)
+    #         print(page.findAll('span',attrs={'class':'rating'})[0].text)
+    #         print(page.findAll('span',attrs={'title':''})[4])
+        ID = page.findAll('td',attrs={'width':'60'})
+        j=1
+        for sub_id in ID:
+            solution_view_url = "https://www.codechef.com/viewplaintext/" + sub_id.text
+    #         print(solution_view_url)
+    #         solution_view_page = requests.get(solution_view_url)
+    #         view_page = BeautifulSoup(solution_view_page.content,'html.parser')
+    #         print(view_page)
+            req = Request(solution_view_url, headers={'User-Agent': 'Mozilla/5.0'})
+            webpage = urlopen(req).read()
+            webpage = BeautifulSoup(webpage,'html.parser')
+            z = webpage.find('pre').text
+            filename = "{}_Solutions/{}/".format(User_name,url_code)+"{}_{}.txt".format(url_code,j)
+            j=j+1
+            if not os.path.exists(os.path.dirname(filename)):
+                try:
+                    os.makedirs(os.path.dirname(filename))
+                except OSError as exc: # Guard against race condition
+                    if exc.errno != errno.EEXIST:
+                        raise
+            f= open(filename,"w+",encoding='utf-8')
+            f.write(z)
+            f.close()
+            print("{}) {} Solution Done...".format(j-1,url_code))
+
+if(choice == 1):
+    Problem_S(Contest_name,User_name,Problem_code_URL)
+    Solution_s(Contest_name,User_name,Problem_code_URL)
+elif(choice == 2):
+    Problem_S(Contest_name,User_name,Problem_code_URL)
+elif(choice == 3):
+    Solution_s(Contest_name,User_name,Problem_code_URL)
+else:
+    print("\nchoice Proper Option\n\n")
