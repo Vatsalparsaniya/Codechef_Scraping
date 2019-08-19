@@ -1,6 +1,6 @@
 # Codechef_Scraping
 [![license](https://img.shields.io/badge/License-Apache%202-yellowgreen)](https://github.com/Vatsalparsaniya/Codechef_Scraping/blob/master/LICENSE)
-![](https://img.shields.io/github/followers/Vatsalparsaniya?label=Follow&style=social)
+![](https://img.shields.io/github/followers/Vatsalparsaniya?label=Follow&style=plastic)
 
 
 Python Script to get All Problem Statements and Solutions of any user for Any CodeChef Competition 
