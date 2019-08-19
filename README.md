@@ -1,4 +1,8 @@
 # Codechef_Scraping
+[![license](https://img.shields.io/badge/License-Apache%202-yellowgreen)](https://github.com/Vatsalparsaniya/Codechef_Scraping/blob/master/LICENSE)
+
+
+
 Python Script to get All Problem Statements and Solutions of any user for Any CodeChef Competition 
 
 After run Script you will get two separate folder 
