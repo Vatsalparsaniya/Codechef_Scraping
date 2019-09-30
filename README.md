@@ -15,21 +15,21 @@ After run Script you will get two separate folder
 
 ## Code Overview
 
-	Getting Arguments
+Getting Arguments
 
-	![](Images/Arguments.png)
+![](Images/Arguments.png)
 
-	Fetching MetaData
+Fetching MetaData
 
-	![](Images/MetaData.png)
+![](Images/MetaData.png)
 
-	Fetching Problem Statments
+Fetching Problem Statments
 
-	![](Images/Problem_s.png)
+![](Images/Problem_s.png)
 
-	Fetching Solution 
+Fetching Solution 
 
-	![](Images/Solution_F.png)
+![](Images/Solution_F.png)
 
 
 ## DEMO
