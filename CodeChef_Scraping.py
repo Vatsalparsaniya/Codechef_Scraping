@@ -10,20 +10,28 @@ import argparse
 
 print("\nRunning...\n")
 
+
+#Arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-c", "--Contest_name", required=True, help="Contest name , Ex : JULY19B ")
 ap.add_argument("-u", "--User_name", required=True, help="User name , Ex : vatsal1999 ")
 args = vars(ap.parse_args())
 
+
+#initialize variable
 Contest_name = args["Contest_name"]
 User_name = args["User_name"]
 Contest_URL = "https://www.codechef.com/{}/".format(Contest_name)
 Contest_page = requests.get(Contest_URL)
 
+
+#Beautify HTML code
 Contest_page_content = BeautifulSoup(Contest_page.content,'html.parser')
-#print(Contest_page_content)
 data = [['Name','Code','Successful Submissions','Accuracy']]
 Problem_code_URL = []
+
+
+# Fatching Main content of competition
 for row in Contest_page_content.findAll('tr',attrs={'class':'problemrow'}):
     #print(row)
     row_data =[]
@@ -38,6 +46,8 @@ for row in Contest_page_content.findAll('tr',attrs={'class':'problemrow'}):
     Problem_code_URL.append(problem_code)
     data.append(row_data)
 
+
+# Printing Table of All content competition 
 dash = '-'*90
 for i in range(len(data)):
     if i == 0:
@@ -47,15 +57,18 @@ for i in range(len(data)):
     else:
         print('{:<40s}{:<15s}{:<25s}{:<10s}'.format(data[i][0],data[i][1],data[i][2],data[i][3]))
 
+
+# tacking Choice from user
 time.sleep(5)
 print("\n\n\nScraping Problem Statement...\n\n")
 print("Select: ")
 print("\t\t1) Problem_Statement + Solution")
 print("\t\t2) Problem_Statement")
 print("\t\t3) Solution")
-
 choice = int(input("Select (1/2/3) :"))
 
+
+# Function for Get Problem statment by Contest name , user name, and url
 def Problem_S(Contest_name,User_name,Problem_code_URL):
     print("\n\nProblem Statement Scraping...")
     for url_code in Problem_code_URL:
@@ -84,8 +97,8 @@ def Problem_S(Contest_name,User_name,Problem_code_URL):
         f.close()
         print("{} Problem_Statement Done...\n".format(url_code))
 
-# print("\n\nScraping Solutions...\n\n")
 
+# Function for Get Solution by Contest name , user name, and url
 def Solution_s(Contest_name,User_name,Problem_code_URL):
     print("\n\nSolutions Scraping...")
     for url_code in Problem_code_URL:
@@ -94,17 +107,10 @@ def Solution_s(Contest_name,User_name,Problem_code_URL):
         Sloution_Status_url = Contest_URL + "status/" +url_code+","+User_name
         page_content = requests.get(Sloution_Status_url)
         page = BeautifulSoup(page_content.content,'html.parser')
-    #         print(page)
-    #         print(page.findAll('span',attrs={'class':'rating'})[0].text)
-    #         print(page.findAll('span',attrs={'title':''})[4])
         ID = page.findAll('td',attrs={'width':'60'})
         j=1
         for sub_id in ID:
             solution_view_url = "https://www.codechef.com/viewplaintext/" + sub_id.text
-    #         print(solution_view_url)
-    #         solution_view_page = requests.get(solution_view_url)
-    #         view_page = BeautifulSoup(solution_view_page.content,'html.parser')
-    #         print(view_page)
             req = Request(solution_view_url, headers={'User-Agent': 'Mozilla/5.0'})
             webpage = urlopen(req).read()
             webpage = BeautifulSoup(webpage,'html.parser')
@@ -121,6 +127,7 @@ def Solution_s(Contest_name,User_name,Problem_code_URL):
             f.write(z)
             f.close()
             print("{}) {} Solution Done...".format(j-1,url_code))
+
 
 if(choice == 1):
     Problem_S(Contest_name,User_name,Problem_code_URL)
