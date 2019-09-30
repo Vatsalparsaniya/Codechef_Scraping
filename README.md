@@ -12,6 +12,26 @@ After run Script you will get two separate folder
    
          2 for Solutions (Name : "Solutions")
 
+
+## Code Overview
+
+	Getting Arguments
+
+	![](Images/Arguments.png)
+
+	Fetching MetaData
+
+	![](Images/MetaData.png)
+
+	Fetching Problem Statments
+
+	![](Images/Problem_s.png)
+
+	Fetching Solution 
+
+	![](Images/Solution_F.png)
+
+
 ## DEMO
    RUN : python CodeChef_Scraping.py -c [CONTEST NAME] -u [USER NAME]
    
