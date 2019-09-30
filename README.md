@@ -52,3 +52,10 @@ Fetching Solution
    3) Solutions Scraping
    
       ![](Images/4.png)
+
+
+## upcoming features
+         
+        1) multi features website
+        2) get efficient Solution code ony
+        3) save all solution according code language
