@@ -71,21 +71,22 @@ choice = int(input("Select (1/2/3) :"))
 # Function for Get Problem statment by Contest name , user name, and url
 def Problem_S(Contest_name,User_name,Problem_code_URL):
     print("\n\nProblem Statement Scraping...")
+    # for every Problem statment URL
     for url_code in Problem_code_URL:
         time.sleep(2)
         print(url_code + " Working...")
         problem_page_url = Contest_URL + 'problems/' + url_code+'/'
         page = requests.get(problem_page_url)
         page_contest = BeautifulSoup(page.content,'html.parser')
-    #   print(page_contest)
         statement = page_contest.findAll('div',attrs={'class':'content'})
         a = statement[1].text
         b = re.sub('[$]', '', a)
+        # Can't fatch All Special character so replacing them by replace function
         b = b.replace("\le","<").replace("\ldots","...").replace("\in","∈").replace("\oplus","⊕").replace("\{","{")
         b =b.replace("\}","}").replace("\sum_{i=1}^{N-1}","i=1∑N−1").replace("**","").replace("`","").replace("\neq","≠")
         b =b.replace("*","").replace("\rightarrow","->").replace("\ge",">").replace(" \cdot ","*").replace("\neq","≠")
-    #   print(type(b))
         file_name = filename = "Problem_Statement/{}/".format(url_code)+"{}.txt".format(url_code)
+        # Macking Folder for Problem statment
         if not os.path.exists(os.path.dirname(file_name)):
                 try:
                     os.makedirs(os.path.dirname(file_name))
@@ -101,20 +102,25 @@ def Problem_S(Contest_name,User_name,Problem_code_URL):
 # Function for Get Solution by Contest name , user name, and url
 def Solution_s(Contest_name,User_name,Problem_code_URL):
     print("\n\nSolutions Scraping...")
+    # for every Problem page url
     for url_code in Problem_code_URL:
         time.sleep(2)
         print("\n"+url_code +"  working...")
+        # make url by solution status
         Sloution_Status_url = Contest_URL + "status/" +url_code+","+User_name
         page_content = requests.get(Sloution_Status_url)
         page = BeautifulSoup(page_content.content,'html.parser')
         ID = page.findAll('td',attrs={'width':'60'})
         j=1
+        # for every solution ID getting information
         for sub_id in ID:
             solution_view_url = "https://www.codechef.com/viewplaintext/" + sub_id.text
             req = Request(solution_view_url, headers={'User-Agent': 'Mozilla/5.0'})
             webpage = urlopen(req).read()
             webpage = BeautifulSoup(webpage,'html.parser')
             z = webpage.find('pre').text
+
+            # Macking New Folder for every New Problem statment
             filename = "{}_Solutions/{}/".format(User_name,url_code)+"{}_{}.txt".format(url_code,j)
             j=j+1
             if not os.path.exists(os.path.dirname(filename)):
